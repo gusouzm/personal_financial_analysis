@@ -6,18 +6,18 @@ services:
     depends_on:
       - db
     environment:
-      DATABASE_HOST: db
-      DATABASE_PORT: 5432
-      DATABASE_NAME: personal_financial_analysis
-      DATABASE_USER: postgres
+      DATABASE_HOST: ${DATABASE_HOST}
+      DATABASE_PORT: ${DATABASE_PORT}
+      DATABASE_NAME: ${DATABASE_NAME}
+      DATABASE_USER: ${DATABASE_USER}
       DATABASE_PASSWORD: ${DATABASE_PASSWORD}
       SECRET_KEY: ${SECRET_KEY}
     
   db:
     image: postgres:17
     environment:
-      POSTGRES_DB: personal_financial_analysis
-      POSTGRES_USER: postgres
+      POSTGRES_DB: ${DATABASE_NAME}
+      POSTGRES_USER: ${DATABASE_USER}
       POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
     ports:
       - "5432:5432"
