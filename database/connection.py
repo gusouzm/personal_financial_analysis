@@ -1,10 +1,11 @@
 import psycopg
+from os import getenv
 
 def get_connection():
     return psycopg.connect(
-        host='localhost',
-        dbname='personal_financial_analysis',
-        user='postgres',
-        password='059411',
-        port=5432
+        host=getenv('DATABASE_HOST', 'db'),
+        dbname=('DATABASE_NAME', 'personal_financial_analysis'),
+        user=('DATABASE_USER', 'postgres'),
+        password=('DATABASE_PASSWORD'),
+        port=('DATABASE_PORT', 5432)
     )
