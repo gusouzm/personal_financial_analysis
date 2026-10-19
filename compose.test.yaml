@@ -1,0 +1,16 @@
+# Throwaway credentials, safe to commit. Nothing here touches real data.
+
+services:
+  web:
+    environment:
+      DATABASE_NAME: test_db
+      DATABASE_USER: test_user
+      DATABASE_PASSWORD: test_password
+      SECRET_KEY: test-key
+    command: pytest
+
+  db:
+    environment:
+      POSTGRES_DB: test_db
+      POSTGRES_USER: test_user
+      POSTGRES_PASSWORD: test_password

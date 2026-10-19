@@ -1,3 +1,5 @@
+"""Sign-in route (/signin) of the auth blueprint."""
+
 from app.forms import SignIn
 from flask import render_template, redirect, url_for, flash
 from werkzeug.security import check_password_hash
@@ -6,6 +8,7 @@ from . import auth
 
 @auth.route('/signin', methods=['GET', 'POST'])
 def signin():
+    """Show the sign-in form; on valid submit, check the password against the stored hash."""
 
     form = SignIn()
 
@@ -16,7 +19,7 @@ def signin():
 
         if user:
             password = form.password.data
-            password_hash = user[2]
+            password_hash = user[2] # column order defined in get_user_by_email
 
             if check_password_hash(password_hash, password):
                 flash('Logged in!', 'success')
@@ -27,7 +30,8 @@ def signin():
                 return redirect(url_for('auth.signin'))
 
         else:
-            flash('Unregistered user.')
+            # Unknown email: send them to sign-up with the email prefilled
+            flash('Unregistered user.', 'error')
             return redirect(url_for('auth.signup', email=email))
 
     return render_template('auth/signin.html', form=form)

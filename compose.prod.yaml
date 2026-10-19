@@ -1,0 +1,15 @@
+# Requires .env.prod: the `:?` makes Compose fail fast if a secret is missing
+# instead of silenty starting with a empty value.
+
+services:
+  web:
+    restart: unless-stopped
+    environment:
+      DATABASE_PASSWORD: ${DATABASE_PASSWORD:?define it in .env.prod}
+      SECRET_KEY: ${SECRET_KEY:?define it in .env.prod}
+
+  db:
+    restart: unless-stopped
+    environment:
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+    # no `ports`: the database is reachable only on the internal Compose network.

@@ -1,0 +1,15 @@
+# Dev only. Loaded automatically by `docker compose up`, but NOT when -f is used.
+
+services:
+  web:
+    ports:
+      - '127.0.0.1:5000:5000' # bound to localhost so the dev server isn't exposed to the network.
+    environment:
+      DEBUG: 'True'
+      HOST: 0.0.0.0 # listen on all interfaces inside the container, or the port mapping won't work.
+    volumes:
+      - .:/app # bind mount for live code changes.
+
+  db:
+    ports:
+      127.0.0.1:5433:5432' # 5433 on the host avoids clashing with a local Postgres.

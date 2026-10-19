@@ -13,10 +13,11 @@ A Data Science and Machine Learning system for personal financial analysis, prov
     - Scikit-learn.
     - SQLAlchemy.
     - Flask.
-- HTML/CSS.
-- JavaScript.
-- Excel.
 - Docker.
+- Front-end.
+    - HTML.
+    - CSS.
+    - JavaScript.
 
 ## How to run.
 

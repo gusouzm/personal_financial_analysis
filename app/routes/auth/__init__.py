@@ -1,3 +1,5 @@
+"""Auth blueprint: sign-in and sign-up routes."""
+
 from flask import Blueprint
 
 auth = Blueprint('auth', __name__)

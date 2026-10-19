@@ -1,28 +1,37 @@
+# Shared base: everything that is the same in dev, test, and prod lives here.
+# The other files only override or add what differs.
+
+# Dev: docker compose up (compose.override.yaml loads automatically)
+# Test: docker compose -f compose.yaml -f compose.test.yaml run --rm web
+# Prod: docker compose -f compose.yaml -f compose.prod.yaml --env-file .env.prod up -d --build
+
 services:
   web:
     build: .
-    ports:
-      - "5000:5000"
-    depends_on:
-      - db
     environment:
-      DATABASE_HOST: ${DATABASE_HOST}
-      DATABASE_PORT: ${DATABASE_PORT}
+      DATABASE_HOST: db # the service name works as a hostname on the Compose network.
+      DATABASE_PORT: 5432
       DATABASE_NAME: ${DATABASE_NAME}
       DATABASE_USER: ${DATABASE_USER}
       DATABASE_PASSWORD: ${DATABASE_PASSWORD}
       SECRET_KEY: ${SECRET_KEY}
-    
+    depends_on:
+      db:
+        condition: service_healthy # wait for Postgres to acept connections, not just to start.
+
   db:
     image: postgres:17
     environment:
       POSTGRES_DB: ${DATABASE_NAME}
       POSTGRES_USER: ${DATABASE_USER}
       POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
-    ports:
-      - "5432:5432"
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - db_data:/var/lib/postgresql/data
+    healthcheck:
+      # `$$` escapes Compose interpolation, so the container's shell expands the variable.
+      test: ['CMD-SHELL', 'pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB']
+      interval: 5s
+      retries: 10
 
 volumes:
-  postgres_data:
+  db_data:

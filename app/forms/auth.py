@@ -1,9 +1,11 @@
+"""Sign-up and sign-in forms (Flask-WTF) for the auth blueprint."""
+
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import DataRequired, Email
 
 class SignUp(FlaskForm):
-    email = StringField('E-mail', validators=[DataRequired(), Email()])
+    email = StringField('Email', validators=[DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired()])
     name = StringField('Name', validators=[DataRequired()])
     submit = SubmitField('Sign up')
