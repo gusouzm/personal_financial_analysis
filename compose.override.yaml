@@ -12,4 +12,4 @@ services:
 
   db:
     ports:
-      127.0.0.1:5433:5432' # 5433 on the host avoids clashing with a local Postgres.
+      - '127.0.0.1:5433:5432' # 5433 on the host avoids clashing with a local Postgres.

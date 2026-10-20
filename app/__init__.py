@@ -12,7 +12,7 @@ def create_app():
     app = Flask(__name__, instance_relative_config=True)
 
     # silent=True: a missing instance/config.py is not an error (e.g. when settings come from env vars)
-    app.config.from_pyfile('config.py', silent=True)
+    app.config.from_object('config')
 
     register_blueprints(app)
 
